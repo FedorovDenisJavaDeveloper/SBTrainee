@@ -19,8 +19,26 @@ public class Main {
     public static void main(String[] args) {
         List<City> cities = parseCsvToListCities();
 //        printList(cities);
-        List<City> sortedByNameCities = sortByCityName(cities);
-        List<City> sortedByDistrictAndNameCities = sortByDistrictAndCityName(cities);
+//        List<City> sortedByNameCities = sortByCityName(cities);
+//        List<City> sortedByDistrictAndNameCities = sortByDistrictAndCityName(cities);
+        findIndexWithMaxPopulation(cities);
+    }
+
+    private static void findIndexWithMaxPopulation(List<City> list) {
+        City[] cities = new City[list.size()];
+        list.toArray(cities);
+        String maxIndex = "";
+        int maxPopulation = 0;
+        int cityPopulation = 0;
+        for (City city :
+                cities) {
+            if ((cityPopulation = Integer.parseInt(city.getPopulation())) >= maxPopulation) {
+                maxIndex = city.getId();
+                maxPopulation = cityPopulation;
+            }
+        }
+        System.out.printf("Индекс города с максимальным количеством людей \n" +
+                "______________________________________________\n[%s]=%d", maxIndex, maxPopulation);
     }
 
     private static void printList(List<City> list) {
