@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
@@ -18,10 +19,19 @@ public class Main {
 
     public static void main(String[] args) {
         List<City> cities = parseCsvToListCities();
-//        printList(cities);
-//        List<City> sortedByNameCities = sortByCityName(cities);
-//        List<City> sortedByDistrictAndNameCities = sortByDistrictAndCityName(cities);
+        printList(cities);
+        List<City> sortedByNameCities = sortByCityName(cities);
+        List<City> sortedByDistrictAndNameCities = sortByDistrictAndCityName(cities);
         findIndexWithMaxPopulation(cities);
+        countCitiesInRegion(cities);
+    }
+
+    private static void countCitiesInRegion(List<City> cities) {
+        Map<String, Long> countCitiesInRegion = cities.stream()
+                .collect(Collectors.groupingBy(City::getRegion, Collectors.counting()));
+        System.out.println("Количество городов в регионах!");
+        System.out.println("------------------------------");
+        countCitiesInRegion.entrySet().forEach(e -> System.out.println(e.getKey() + " = " + e.getValue()));
     }
 
     private static void findIndexWithMaxPopulation(List<City> list) {
@@ -38,7 +48,7 @@ public class Main {
             }
         }
         System.out.printf("Индекс города с максимальным количеством людей \n" +
-                "______________________________________________\n[%s]=%d", maxIndex, maxPopulation);
+                "______________________________________________\n[%s]=%d\n\n", maxIndex, maxPopulation);
     }
 
     private static void printList(List<City> list) {
